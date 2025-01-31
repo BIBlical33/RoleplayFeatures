@@ -5,6 +5,7 @@ Exiled API plugin designed to improve immersion on SCP SL RP servers
 - Prohibit all SCPs from detonating the warhead.
 - Prohibit all SCPs, except SCP-049, from interacting with the warhead panel or disabling generators.
 - Infinite tokens for MTF/CI spawning.
+- Prohibition against leaving by lift from SCP-096.
 - Hide the player's nickname when speaking on the radio.
 
 # Default config
