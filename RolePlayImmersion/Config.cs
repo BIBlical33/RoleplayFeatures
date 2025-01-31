@@ -9,6 +9,8 @@ namespace RoleplayImmersion
 
         public bool Debug { get; set; } = false;
         
+        public bool IsInfinityMtfAndCITokensEnabled { get; set; } = false;
+
         [Description("Hide players nicknames when using the radio?")]
         public bool IsUnknownTransmittingEnabled { get; set; } = true;
         

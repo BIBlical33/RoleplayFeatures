@@ -127,12 +127,15 @@ namespace RoleplayImmersion
             scp096TargetsThirdAggroStatus.Remove(ev.Player.Id);
             scp096TargetsAggroCount.Remove(ev.Player.Id);
 
-            // I'm C++ developer moment
-            int ntf_tokens, ci_tokens;
-            bool ntf_result = Respawn.TryGetTokens(SpawnableFaction.NtfWave, out ntf_tokens), ci_result = Respawn.TryGetTokens(SpawnableFaction.ChaosWave, out ci_tokens);
+            if (_config.IsInfinityMtfAndCITokensEnabled)
+            {
+                // I'm C++ developer moment
+                int ntf_tokens, ci_tokens;
+                bool ntf_result = Respawn.TryGetTokens(SpawnableFaction.NtfWave, out ntf_tokens), ci_result = Respawn.TryGetTokens(SpawnableFaction.ChaosWave, out ci_tokens);
 
-            if (ntf_result && ntf_tokens == 0) Respawn.ModifyTokens(PlayerRoles.Faction.FoundationStaff, 1);
-            if (ci_result && ci_tokens == 0) Respawn.ModifyTokens(PlayerRoles.Faction.FoundationEnemy, 1);
+                if (ntf_result && ntf_tokens == 0) Respawn.ModifyTokens(PlayerRoles.Faction.FoundationStaff, 1);
+                if (ci_result && ci_tokens == 0) Respawn.ModifyTokens(PlayerRoles.Faction.FoundationEnemy, 1);
+            }
         }
 
         public void OnRoundStarted()
