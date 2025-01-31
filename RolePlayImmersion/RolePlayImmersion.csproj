@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <ImplicitUsings>false</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Exiled.API">
+      <HintPath>$(USERPROFILE)\.nuget\packages\exmod.exiled\9.4.0\lib\net48\Exiled.API.dll</HintPath>
+    </Reference>
+    <Reference Include="Exiled.Events">
+      <HintPath>$(USERPROFILE)\.nuget\packages\exmod.exiled\9.4.0\lib\net48\Exiled.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-Publicized">
+      <HintPath>$(USERPROFILE)\.nuget\packages\exmod.exiled\9.4.0\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
