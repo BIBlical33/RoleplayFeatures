@@ -2,9 +2,9 @@
 
 # Features
 - Prohibit all SCPs from detonating the warhead.
-- Prohibit all SCPs, except SCP-049, from interacting with the warhead to disable the generators.
+- Prohibit all SCPs, except SCP-049, from interacting with the warhead panel or disabling generators.
 - Infinite tokens for MTF/CI spawning.
-- Hide the player's name when speaking on the radio.
+- Hide the player's nickname when speaking on the radio.
 
 # Default config
 ```
