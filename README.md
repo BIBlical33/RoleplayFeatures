@@ -5,7 +5,7 @@
 - Prohibit all SCPs, except SCP-049, from interacting with the warhead to disable the generators.
 - Infinite tokens for MTF/CI spawning.
 - Hide the player's name when speaking on the radio.
-- 
+
 # Default config
 ```
 RolePlayImmersion:
