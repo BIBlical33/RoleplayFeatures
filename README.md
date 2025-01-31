@@ -12,6 +12,7 @@ Exiled API plugin designed to improve immersion on SCP SL RP servers
 RolePlayImmersion:
   is_enabled: true
   debug: false
+  is_infinity_mtf_and_c_i_tokens_enabled: true
   # Hide players nicknames when using the radio?
   is_unknown_transmitting_enabled: true
   # A Text replacing player's nickname on the radio
