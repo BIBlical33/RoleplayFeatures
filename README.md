@@ -1,4 +1,5 @@
 # RolePlayImmersion
+Exiled API plugin designed to improve immersion on SCP SL RP servers
 
 # Features
 - Prohibit all SCPs from detonating the warhead.
