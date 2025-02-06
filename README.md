@@ -11,6 +11,7 @@
 RolePlayImmersion:
   is_enabled: true
   debug: false
+  is_infinity_mtf_and_ci_tokens_enabled: true
   # Hide players nicknames when using the radio?
   is_unknown_transmitting_enabled: true
   # A Text replacing player's nickname on the radio
@@ -20,4 +21,3 @@ RolePlayImmersion:
   # 096 blocking calling elevator message
   hint_message: 'SCP-096 will catch up with you, it won''t work'
 ```
-

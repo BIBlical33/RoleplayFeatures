@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Features;
+using System;
 
 namespace RoleplayImmersion
 {
@@ -10,14 +11,18 @@ namespace RoleplayImmersion
 
         public override string Prefix => Name;
 
+        public override Version RequiredExiledVersion { get; } = new Version(9, 0, 0);
+
+        public override Version Version { get; } = new Version(1, 1, 0);
+
         public static Plugin Instance;
 
-        private EventHandler _handlers { get; set; }
+        private EventHandlers _handlers { get; set; }
 
         public override void OnEnabled()
         {
             Instance = this;
-            _handlers = new EventHandler(Config);
+            _handlers = new EventHandlers(Config);
 
             Exiled.Events.Handlers.Player.Transmitting += _handlers.OnTransmitting;
             Exiled.Events.Handlers.Player.ChangingRole += _handlers.OnChangingRole;

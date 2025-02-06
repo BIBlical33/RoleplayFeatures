@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace RoleplayImmersion
 {
-    public class EventHandler
+    public class EventHandlers
     {
         private readonly Config _config;
 
@@ -19,7 +19,7 @@ namespace RoleplayImmersion
 
         private readonly Dictionary<int, bool> scp096TargetsThirdAggroStatus = new();
 
-        public EventHandler(Config config) => _config = config;
+        public EventHandlers(Config config) => _config = config;
 
         public void OnTransmitting(TransmittingEventArgs ev)
         {
@@ -127,13 +127,14 @@ namespace RoleplayImmersion
             scp096TargetsThirdAggroStatus.Remove(ev.Player.Id);
             scp096TargetsAggroCount.Remove(ev.Player.Id);
 
-            if (_config.IsInfinityMtfAndCITokensEnabled)
+            if (_config.IsInfinityMtfAndCiTokensEnabled)
             {
                 // I'm C++ developer moment
                 int ntf_tokens, ci_tokens;
                 bool ntf_result = Respawn.TryGetTokens(SpawnableFaction.NtfWave, out ntf_tokens), ci_result = Respawn.TryGetTokens(SpawnableFaction.ChaosWave, out ci_tokens);
 
                 if (ntf_result && ntf_tokens == 0) Respawn.ModifyTokens(PlayerRoles.Faction.FoundationStaff, 1);
+
                 if (ci_result && ci_tokens == 0) Respawn.ModifyTokens(PlayerRoles.Faction.FoundationEnemy, 1);
             }
         }
