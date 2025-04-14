@@ -1,11 +1,14 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.API.Extensions;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Scp096;
 using Exiled.Events.EventArgs.Scp914;
 using Exiled.Events.EventArgs.Warhead;
 using PlayerRoles;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RoleplayImmersion
 {
@@ -17,7 +20,7 @@ namespace RoleplayImmersion
 
         private readonly Dictionary<int, int> scp096TargetsAggroCount = new();
 
-        private readonly Dictionary<int, bool> scp096TargetsThirdAggroStatus = new();
+        private readonly Dictionary<int, bool> scp096TargetsFinalAggroStatus = new();
 
         public EventHandlers(Config config) => _config = config;
 
@@ -97,7 +100,7 @@ namespace RoleplayImmersion
                 scp096TargetsAggroCount[ev.Target.Id]++;
                 if (scp096TargetsAggroCount[ev.Target.Id] > _config.EscapingByElevatorMaxTimes)
                 {
-                    scp096TargetsThirdAggroStatus[ev.Target.Id] = true;
+                    scp096TargetsFinalAggroStatus[ev.Target.Id] = true;
                 }
             }
 
@@ -105,26 +108,26 @@ namespace RoleplayImmersion
 
         public void OnInteractingElevator(InteractingElevatorEventArgs ev)
         {
-            if (scp096TargetsThirdAggroStatus.TryGetValue(ev.Player.Id, out bool isNotPosibleToInteracteElevator) &&
+            if (scp096TargetsFinalAggroStatus.TryGetValue(ev.Player.Id, out bool isNotPosibleToInteracteElevator) &&
                 isNotPosibleToInteracteElevator)
             {
                 ev.IsAllowed = false;
-                ev.Player.ShowHint(_config.HintMessage);
+                ev.Player.ShowHint(_config.Scp096ElevatorHint);
             }
         }
 
         public void OnCalmingDown(CalmingDownEventArgs ev)
         {
-            foreach (var key in new List<int>(scp096TargetsThirdAggroStatus.Keys))
+            foreach (var key in new List<int>(scp096TargetsFinalAggroStatus.Keys))
             {
-                scp096TargetsThirdAggroStatus[key] = false;
+                scp096TargetsFinalAggroStatus[key] = false;
             }
         }
 
         public void OnChangingRole(ChangingRoleEventArgs ev)
         {
             originalNames.Remove(ev.Player.Id);
-            scp096TargetsThirdAggroStatus.Remove(ev.Player.Id);
+            scp096TargetsFinalAggroStatus.Remove(ev.Player.Id);
             scp096TargetsAggroCount.Remove(ev.Player.Id);
 
             if (_config.IsInfinityMtfAndCiTokensEnabled)
@@ -143,7 +146,30 @@ namespace RoleplayImmersion
         {
             originalNames.Clear();
             scp096TargetsAggroCount.Clear();
-            scp096TargetsThirdAggroStatus.Clear();
+            scp096TargetsFinalAggroStatus.Clear();
+            Plugin.escapeTimes.Clear();
+        }
+
+        public void OnEscaping(EscapingEventArgs ev)
+        {
+            if (_config.IsChaosEscapeWithThreeScpsOrSpecialWeaponAllowed)
+            {
+                if (ev.Player.Role.Side == Side.ChaosInsurgency && (ev.Player.CountItem(ItemCategory.SCPItem) + ev.Player.CountItem(ItemCategory.SpecialWeapon) >= _config.ScpsAndSpecialWeaponsCountToChaosEscape))
+                {
+                    ev.NewRole = RoleTypeId.Spectator;
+                    ev.IsAllowed = true;
+                }
+            }
+
+            if (_config.KeepEffectsAfterEscaping)
+            {
+                if (ev.Player.Role.Side != Side.Scp && ev.IsAllowed && ev.NewRole != RoleTypeId.Spectator)
+                {
+                    Plugin.escapingPlayerEffects[ev.Player.Id] = ev.Player.ActiveEffects.Select(e => (e.GetEffectType(), e.Intensity, e.TimeLeft)).ToList();
+
+                    Plugin.escapeTimes[ev.Player.Id] = DateTime.UtcNow;
+                }
+            }
         }
     }
 }
