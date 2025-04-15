@@ -11,7 +11,7 @@ Exiled API plugin designed to improve immersion on SCP SL RP servers
 - Returning effects after escaping with a command `.effectsgive`.
 
 # Default config
-```
+```yaml
 RolePlayImmersion:
   is_enabled: true
   debug: false
