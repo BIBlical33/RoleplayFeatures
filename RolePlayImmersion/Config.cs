@@ -11,6 +11,10 @@ namespace RoleplayImmersion
 
         public bool IsInfinityMtfAndCiTokensEnabled { get; set; } = false;
 
+        public bool IsScpEscapeCassiesEnabled { get; set; } = true;
+
+        public string ScpEscapeCassieContent { get; set; } = "{0} has escaped from the facility";
+
         public bool KeepEffectsAfterEscaping { get; set; } = true;
 
         [Description("Time to apply the effects (in seconds).")]

@@ -22,6 +22,18 @@ namespace RoleplayImmersion
 
         private readonly Dictionary<int, bool> scp096TargetsFinalAggroStatus = new();
 
+        private static readonly HashSet<RoleTypeId> mainScps = new() {
+            RoleTypeId.Scp049,
+            RoleTypeId.Scp079,
+            RoleTypeId.Scp096,
+            RoleTypeId.Scp106,
+            RoleTypeId.Scp173,
+            RoleTypeId.Scp939,
+            RoleTypeId.Scp3114
+        };
+
+        private readonly Dictionary<int, DateTime> scpIsEscaped = new();
+
         public EventHandlers(Config config) => _config = config;
 
         public void OnTransmitting(TransmittingEventArgs ev)
@@ -140,6 +152,27 @@ namespace RoleplayImmersion
 
                 if (ci_result && ci_tokens == 0) Respawn.ModifyTokens(PlayerRoles.Faction.FoundationEnemy, 1);
             }
+
+            if (_config.IsScpEscapeCassiesEnabled)
+            {
+                if (scpIsEscaped.ContainsKey(ev.Player.Id))
+                    if (ev.NewRole == RoleTypeId.Spectator && mainScps.Contains(ev.Player.Role) && (DateTime.UtcNow - scpIsEscaped[ev.Player.Id]).TotalSeconds < 20)
+                    {
+                        string escapingScpName = ev.Player.Role.Name, scpCassieName = "SCP ";
+
+                        for (int i = 0; i < escapingScpName.Length; ++i)
+                        {
+                            if (char.IsDigit(escapingScpName[i]))
+                            {
+                                scpCassieName += escapingScpName[i] + " ";
+                            }
+                        }
+
+                        Cassie.Message(string.Format(_config.ScpEscapeCassieContent, scpCassieName));
+                    }
+                    else { scpIsEscaped.Remove(ev.Player.Id); }
+
+            }
         }
 
         public void OnRoundStarted()
@@ -147,6 +180,7 @@ namespace RoleplayImmersion
             originalNames.Clear();
             scp096TargetsAggroCount.Clear();
             scp096TargetsFinalAggroStatus.Clear();
+            scpIsEscaped.Clear();
             Plugin.escapeTimes.Clear();
         }
 
@@ -168,6 +202,14 @@ namespace RoleplayImmersion
                     Plugin.escapingPlayerEffects[ev.Player.Id] = ev.Player.ActiveEffects.Select(e => (e.GetEffectType(), e.Intensity, e.TimeLeft)).ToList();
 
                     Plugin.escapeTimes[ev.Player.Id] = DateTime.UtcNow;
+                }
+            }
+
+            if (_config.IsScpEscapeCassiesEnabled)
+            {
+                if (mainScps.Contains(ev.Player.Role))
+                {
+                    scpIsEscaped[ev.Player.Id] = DateTime.UtcNow;
                 }
             }
         }
