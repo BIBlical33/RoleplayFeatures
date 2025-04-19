@@ -1,4 +1,4 @@
-# RolePlayImmersion
+# RoleplayFeatures
 Exiled API plugin designed to improve immersion on SCP SL RP servers
 
 # Features
