@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RolePlayImmersion", "RolePlayImmersion\RolePlayImmersion.csproj", "{5E128EDB-97D0-401D-818D-76226EF6DA50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoleplayFeatures", "RoleplayFeatures\RoleplayFeatures.csproj", "{5E128EDB-97D0-401D-818D-76226EF6DA50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

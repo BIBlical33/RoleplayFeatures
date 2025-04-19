@@ -1,7 +1,7 @@
 ﻿using Exiled.API.Interfaces;
 using System.ComponentModel;
 
-namespace RoleplayImmersion
+namespace RoleplayFeatures
 {
     public class Config : IConfig
     {
@@ -29,11 +29,7 @@ namespace RoleplayImmersion
         public bool IsScp079Downloadable { get; set; } = true;
 
         [Description("How long does it take to load Scp-079 in seconds?")]
-        public uint Scp079DownloadDuration { get; set; } = 120;
-
-        public string Scp079DownloadStoppingHint{ get; set; } = "The download of SCP-079 has been interrupted";
-
-        public string Scp079DownloadCompletedHint { get; set; } = "The download of SCP-079 completed";
+        public uint Scp079DownloadDuration { get; set; } = 100;
 
         public bool IsScp079DownloadCassieEnabled { get; set; } = true;
 
@@ -47,8 +43,5 @@ namespace RoleplayImmersion
 
         [Description("How many times is it possible to escape by elevator from SCP-096?")]
         public uint EscapingByElevatorMaxTimes { get; set; } = 2;
-
-        [Description("096 blocking calling elevator message")]
-        public string Scp096ElevatorHint { get; set; } = "SCP-096 will catch up with you, it won't work";
     }
 }
