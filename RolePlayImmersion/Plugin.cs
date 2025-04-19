@@ -2,6 +2,7 @@
 using Exiled.API.Features;
 using System;
 using System.Collections.Generic;
+using MEC;
 
 namespace RoleplayImmersion
 {
@@ -23,7 +24,13 @@ namespace RoleplayImmersion
 
         public static Dictionary<int, DateTime> escapeTimes { get; } = new();
 
-        private EventHandlers _handlers { get; set; }
+        public static HashSet<Room> scp079Rooms = new();
+
+        public static Dictionary<int, CoroutineHandle> active079Downloads = new();
+
+        public static HashSet<int> has079FlashDrive = new();
+
+        public EventHandlers _handlers { get; set; }
 
         public override void OnEnabled()
         {

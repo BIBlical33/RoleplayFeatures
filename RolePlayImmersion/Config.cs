@@ -25,6 +25,20 @@ namespace RoleplayImmersion
         [Description("How many SCPs and special weapons should a Chaos Insurgent have in his inventory to escape?")]
         public uint ScpsAndSpecialWeaponsCountToChaosEscape { get; set; } = 3;
 
+        [Description("Can SCP-079 escape with outside help?")]
+        public bool IsScp079Downloadable { get; set; } = true;
+
+        [Description("How long does it take to load Scp-079 in seconds?")]
+        public uint Scp079DownloadDuration { get; set; } = 120;
+
+        public string Scp079DownloadStoppingHint{ get; set; } = "The download of SCP-079 has been interrupted";
+
+        public string Scp079DownloadCompletedHint { get; set; } = "The download of SCP-079 completed";
+
+        public bool IsScp079DownloadCassieEnabled { get; set; } = true;
+
+        public string Scp079CassieDownloadMessage { get; set; } = "Attention . Unauthorized access to SCP 0 7 9 containment chamber has been detected . Security check requiresS";
+
         [Description("Hide players nicknames when using the radio?")]
         public bool IsUnknownTransmittingEnabled { get; set; } = true;
 

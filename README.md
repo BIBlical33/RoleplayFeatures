@@ -3,6 +3,7 @@ Exiled API plugin designed to improve immersion on SCP SL RP servers
 
 # Features
 - Prohibition against leaving by lift from SCP-096.
+- Escape mechanic for SCP-079 using `.079download`.
 - Hide the player's nickname when speaking on the radio.
 - Allows a Chaos Insurgent to escape if they have taken SCP items and special weapons.
 - Prohibit all SCPs from detonating the warhead.

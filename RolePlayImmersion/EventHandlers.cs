@@ -9,6 +9,8 @@ using PlayerRoles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Exiled.API.Features.Doors;
+using MEC;
 
 namespace RoleplayImmersion
 {
@@ -173,6 +175,17 @@ namespace RoleplayImmersion
                     else { scpIsEscaped.Remove(ev.Player.Id); }
 
             }
+
+            if (_config.IsScp079Downloadable)
+            {
+                if (Plugin.active079Downloads.TryGetValue(ev.Player.Id, out var handle))
+                {
+                    Timing.KillCoroutines(handle);
+                    Plugin.active079Downloads.Remove(ev.Player.Id);
+                }
+
+                Plugin.has079FlashDrive.Remove(ev.Player.Id);
+            }
         }
 
         public void OnRoundStarted()
@@ -182,6 +195,20 @@ namespace RoleplayImmersion
             scp096TargetsFinalAggroStatus.Clear();
             scpIsEscaped.Clear();
             Plugin.escapeTimes.Clear();
+            Plugin.escapingPlayerEffects.Clear();
+            Plugin.scp079Rooms.Clear();
+            Plugin.active079Downloads.Clear();
+            Plugin.has079FlashDrive.Clear();
+
+            if (_config.IsScp079Downloadable)
+            {
+                var rooms = Door.Get(DoorType.Scp079First).Rooms
+                    .Concat(Door.Get(DoorType.Scp079Second).Rooms)
+                    .Concat(Door.Get(DoorType.Scp079Armory).Rooms);
+
+                foreach (var room in rooms)
+                    Plugin.scp079Rooms.Add(room);
+            }
         }
 
         public void OnEscaping(EscapingEventArgs ev)
@@ -212,6 +239,44 @@ namespace RoleplayImmersion
                     scpIsEscaped[ev.Player.Id] = DateTime.UtcNow;
                 }
             }
+
+            if (_config.IsScp079Downloadable && !ev.Player.IsCuffed)
+            {
+                if (Plugin.has079FlashDrive.Contains(ev.Player.Id))
+                {
+                    Plugin.has079FlashDrive.Remove(ev.Player.Id);
+
+                    foreach (Player player in Player.List)
+                    {
+                        if (player.Role == RoleTypeId.Scp079)
+                            player.Role.Set(RoleTypeId.Spectator);
+                    }
+
+                    if (_config.IsScpEscapeCassiesEnabled)
+                        Cassie.Message(string.Format(_config.ScpEscapeCassieContent, "SCP 0 7 9"));
+                }
+            }
+        }
+
+        public IEnumerator<float> Download079Coroutine(Player player)
+        {
+            float timer = 0f;
+            while (timer < _config.Scp079DownloadDuration)
+            {
+                if (!Plugin.scp079Rooms.Contains(player.CurrentRoom) || player.Role != RoleTypeId.Scp049 && !player.IsHuman)
+                {
+                    player.ShowHint(_config.Scp079DownloadStoppingHint);
+                    Plugin.active079Downloads.Remove(player.Id);
+                    yield break;
+                }
+
+                yield return Timing.WaitForSeconds(1f);
+                timer += 1f;
+            }
+
+            Plugin.has079FlashDrive.Add(player.Id);
+            Plugin.active079Downloads.Remove(player.Id);
+            player.ShowHint(_config.Scp079DownloadCompletedHint);
         }
     }
 }

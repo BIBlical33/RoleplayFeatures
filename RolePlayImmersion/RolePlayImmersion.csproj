@@ -11,6 +11,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\.nuget\packages\exmod.exiled\9.5.1\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\..\..\Downloads\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
     <Reference Include="CommandSystem.Core">
       <HintPath>..\..\..\..\.nuget\packages\exmod.exiled\9.5.1\lib\net48\CommandSystem.Core.dll</HintPath>
     </Reference>
