@@ -33,7 +33,7 @@ namespace RoleplayFeatures
 
         public bool IsScp079DownloadCassieEnabled { get; set; } = true;
 
-        public string Scp079CassieDownloadMessage { get; set; } = "Attention . Unauthorized access to SCP 0 7 9 containment chamber has been detected . Security check requiresS";
+        public string Scp079CassieDownloadMessage { get; set; } = "Attention . Unauthorized access to SCP 0 7 9 containment chamber has been detected . Security check requires";
 
         [Description("Hide players nicknames when using the radio?")]
         public bool IsUnknownTransmittingEnabled { get; set; } = true;
