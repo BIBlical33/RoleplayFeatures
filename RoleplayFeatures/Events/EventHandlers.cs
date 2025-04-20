@@ -34,7 +34,7 @@ public class EventHandlers
             RoleTypeId.Scp173,
             RoleTypeId.Scp939,
             RoleTypeId.Scp3114
-        };
+    };
 
     private Dictionary<int, DateTime> scpIsEscaped = new();
 
@@ -199,8 +199,8 @@ public class EventHandlers
         {
             if (ev.Player.Role.Side == Side.ChaosInsurgency && (ev.Player.CountItem(ItemCategory.SCPItem) + ev.Player.CountItem(ItemCategory.SpecialWeapon) >= config.ScpsAndSpecialWeaponsCountToChaosEscape))
             {
-                ev.NewRole = RoleTypeId.Spectator;
-                ev.IsAllowed = true;
+                ev.Player.ClearInventory();
+                ev.Player.Role.Set(RoleTypeId.Spectator);
             }
         }
 
