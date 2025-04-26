@@ -1,4 +1,11 @@
-﻿namespace RoleplayFeatures.Events;
+﻿// Copyright 2025, github.com/BIBlical33
+//
+// Handling the events specified in Plugin.cs
+//
+// License: Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+// See: https://creativecommons.org/licenses/by-sa/3.0/
+
+namespace RoleplayFeatures.Events;
 
 using Exiled.API.Enums;
 using Exiled.API.Features;

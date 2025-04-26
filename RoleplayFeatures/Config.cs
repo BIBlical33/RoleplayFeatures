@@ -1,4 +1,11 @@
-﻿using Exiled.API.Interfaces;
+﻿// Copyright 2025, github.com/BIBlical33
+//
+// Sets plugin config
+//
+// License: Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+// See: https://creativecommons.org/licenses/by-sa/3.0/
+
+using Exiled.API.Interfaces;
 using System.ComponentModel;
 
 namespace RoleplayFeatures

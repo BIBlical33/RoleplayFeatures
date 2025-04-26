@@ -1,4 +1,11 @@
-﻿using System.ComponentModel;
+﻿// Copyright 2025, github.com/BIBlical33
+//
+// Sets plugin's translations
+//
+// License: Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+// See: https://creativecommons.org/licenses/by-sa/3.0/
+
+using System.ComponentModel;
 using Exiled.API.Interfaces;
 
 namespace RoleplayFeatures

@@ -1,4 +1,11 @@
-﻿using CommandSystem;
+﻿// Copyright 2025, github.com/BIBlical33
+//
+// .079gates command
+//
+// License: Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+// See: https://creativecommons.org/licenses/by-sa/3.0/
+
+using CommandSystem;
 using System;
 using Exiled.API.Features;
 namespace RoleplayFeatures.Commands;
