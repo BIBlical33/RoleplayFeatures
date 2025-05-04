@@ -1,7 +1,7 @@
 # RoleplayFeatures
 Exiled API plugin designed to improve immersion on SCP SL RP servers
 
-# Features
+## Features
 - Prohibition against leaving by lift from SCP-096.
 - Escape mechanic for SCP-079 using `.079download`, `.079gates`, assisted by SCP-049 or human.
 - Hide the player's nickname when speaking on the radio.
@@ -12,7 +12,7 @@ Exiled API plugin designed to improve immersion on SCP SL RP servers
 - Infinite tokens for MTF/CI spawning.
 - Returning effects after escaping with a command `.effectsgive`.
 
-# Default config
+## Default config
 ```yaml
 RoleplayFeatures:
   is_enabled: true
