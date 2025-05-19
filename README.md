@@ -28,7 +28,7 @@ Exiled API plugin designed to improve immersion on SCP SL RP servers.
 ```yaml
 is_enabled: true
 debug: false
-is_infinity_waves_tokens_enabled: true
+is_infinity_waves_tokens_enabled: false
 is_scp_escape_cassies_enabled: true
 scp_escape_cassie_content: '{0} has escaped from the facility'
 is_chaos_escape_allowed: true
