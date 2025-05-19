@@ -24,7 +24,7 @@ Exiled API plugin designed to improve immersion on SCP SL RP servers.
 1. Install [Exiled](https://github.com/ExSLMod-Team/EXILED).
 2. Chose git release, download `RoleplayFeatures.dll` and drop into server `.config/Exiled/Plugins` path.
  
-# Default config
+## Default config
 ```yaml
 is_enabled: true
 debug: false
@@ -50,3 +50,6 @@ radio_custom_name: '???'
 # How many times is it possible to escape by elevator from SCP-096?
 escaping_by_elevator_max_times: 2
 ```
+
+## Support
+If you encounter any issues with the plugin, you can contact me on my [Discord](https://discord.gg/bHXRudyhtu).
