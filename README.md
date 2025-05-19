@@ -1,5 +1,10 @@
 # RoleplayFeatures
 
+[![Version](https://img.shields.io/github/v/release/BIBlical33/RoleplayFeatures?sort=semver&style=flat-square&color=8DBBE9&label=Version)]()
+[![License](https://img.shields.io/badge/License-CC%20BY%E2%80%93SA%203.0-df967f?style=flat-square)]()
+![Downloads](https://img.shields.io/github/downloads/BIBlical33/RoleplayFeatures/total?label=downloads&color=orange)
+[![Discord](https://img.shields.io/badge/Discord-Support-7289DA?style=for-the-badge&logo=discord)](https://discord.gg/bHXRudyhtu)
+
 ## Overview
 Exiled API plugin designed to improve immersion on SCP SL RP servers.
 
