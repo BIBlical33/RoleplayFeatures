@@ -1,4 +1,6 @@
 # RoleplayFeatures
+
+## Overview
 Exiled API plugin designed to improve immersion on SCP SL RP servers
 
 ## Features
@@ -12,7 +14,12 @@ Exiled API plugin designed to improve immersion on SCP SL RP servers
 - Infinite tokens for MTF/CI spawning.
 - Returning effects after escaping with a command `.effectsgive`.
 
-## Default config
+
+## Installation
+### 1. Install [Exiled](https://github.com/ExSLMod-Team/EXILED).
+### 2. Chose git release, download `RoleplayFeatures.dll` and drop into server `.config/Exiled/Plugins` path.
+ 
+# Default config
 ```yaml
 is_enabled: true
 debug: false
