@@ -15,7 +15,6 @@ using Exiled.API.Enums;
 [CommandHandler(typeof(ClientCommandHandler))]
 public class EffectsGive : ICommand
 {
-
     private Config config => Plugin.Instance.Config;
 
     public string Command { get; } = "effectsgive";

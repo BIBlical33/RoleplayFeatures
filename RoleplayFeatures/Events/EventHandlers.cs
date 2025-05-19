@@ -145,7 +145,7 @@ public class EventHandlers
         scp096TargetsFinalAggroStatus.Remove(ev.Player.Id);
         scp096TargetsAggroCount.Remove(ev.Player.Id);
 
-        if (config.IsInfinityMtfAndCiTokensEnabled)
+        if (config.IsInfinityWavesTokensEnabled)
         {
             int ntfTokens, ciTokens;
             bool ntf_result = Respawn.TryGetTokens(SpawnableFaction.NtfWave, out ntfTokens), ci_result = Respawn.TryGetTokens(SpawnableFaction.ChaosWave, out ciTokens);
@@ -202,7 +202,7 @@ public class EventHandlers
 
     public void OnEscaping(EscapingEventArgs ev)
     {
-        if (config.IsChaosEscapeWithThreeScpsOrSpecialWeaponAllowed)
+        if (config.IsChaosEscapeAllowed)
         {
             if (ev.Player.Role.Side == Side.ChaosInsurgency && (ev.Player.CountItem(ItemCategory.SCPItem) + ev.Player.CountItem(ItemCategory.SpecialWeapon) >= config.ScpsAndSpecialWeaponsCountToChaosEscape))
             {

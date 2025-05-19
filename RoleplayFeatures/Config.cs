@@ -16,26 +16,26 @@ namespace RoleplayFeatures
 
         public bool Debug { get; set; } = false;
 
-        public bool IsInfinityMtfAndCiTokensEnabled { get; set; } = false;
+        public bool IsInfinityWavesTokensEnabled { get; set; } = false;
 
         public bool IsScpEscapeCassiesEnabled { get; set; } = true;
 
         public string ScpEscapeCassieContent { get; set; } = "{0} has escaped from the facility";
+
+        public bool IsChaosEscapeAllowed { get; set; } = true;
+
+        [Description("How many SCPs and special weapons should a Chaos Insurgent have in his inventory to escape?")]
+        public uint ScpsAndSpecialWeaponsCountToChaosEscape { get; set; } = 3;
 
         public bool KeepEffectsAfterEscaping { get; set; } = true;
 
         [Description("Time to apply the effects (in seconds).")]
         public uint TimeToApplyEffects { get; set; } = 60;
 
-        public bool IsChaosEscapeWithThreeScpsOrSpecialWeaponAllowed { get; set; } = true;
-
-        [Description("How many SCPs and special weapons should a Chaos Insurgent have in his inventory to escape?")]
-        public uint ScpsAndSpecialWeaponsCountToChaosEscape { get; set; } = 3;
-
         [Description("Can SCP-079 escape with outside help?")]
         public bool IsScp079Downloadable { get; set; } = true;
 
-        [Description("How long does it take to load Scp-079 in seconds?")]
+        [Description("How long does it take to load SCP-079 in seconds?")]
         public uint Scp079DownloadDuration { get; set; } = 100;
 
         public bool IsScp079DownloadCassieEnabled { get; set; } = true;
