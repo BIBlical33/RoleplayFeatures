@@ -28,21 +28,22 @@ Exiled API plugin designed to improve immersion on SCP SL RP servers.
 ```yaml
 is_enabled: true
 debug: false
-is_infinity_waves_tokens_enabled: false
+is_infinity_waves_tokens_enabled: true
 is_scp_escape_cassies_enabled: true
 scp_escape_cassie_content: '{0} has escaped from the facility'
 is_chaos_escape_allowed: true
 # How many SCPs and special weapons should a Chaos Insurgent have in his inventory to escape?
 scps_and_special_weapons_count_to_chaos_escape: 3
+scp079_escape:
+# Can SCP-079 escape with outside help?
+  is_downloadable: true
+  # How long does it take to load SCP-079 in seconds?
+  download_duration: 100
+  is_download_cassie_enabled: true
+  cassie_download_message: 'Attention . Unauthorized access to SCP 0 7 9 containment chamber has been detected . Security check requires .'
 keep_effects_after_escaping: true
 # Time to apply the effects (in seconds).
 time_to_apply_effects: 60
-# Can SCP-079 escape with outside help?
-is_scp079_downloadable: true
-# How long does it take to load SCP-079 in seconds?
-scp079_download_duration: 100
-is_scp079_download_cassie_enabled: true
-scp079_cassie_download_message: 'Attention . Unauthorized access to SCP 0 7 9 containment chamber has been detected . Security check requiresS'
 # Hide players nicknames when using the radio?
 is_unknown_transmitting_enabled: true
 # A text replacing player's nickname on the radio

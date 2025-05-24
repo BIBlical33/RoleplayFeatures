@@ -5,8 +5,6 @@
 // License: Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
 // See: https://creativecommons.org/licenses/by-sa/3.0/
 
-namespace RoleplayFeatures.Events;
-
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Extensions;
@@ -20,20 +18,23 @@ using System.Collections.Generic;
 using System.Linq;
 using Exiled.API.Features.Doors;
 using MEC;
+using System.Collections.ObjectModel;
+
+namespace RoleplayFeatures.Events;
 
 public class EventHandlers
 {
-    private Config config => Plugin.Instance.Config;
+    private Config Config => Plugin.Instance.Config;
 
-    private Translation translation => Plugin.Instance.Translation;
+    private Translation Translation => Plugin.Instance.Translation;
 
-    private Dictionary<int, string> originalNames = new();
+    private readonly Dictionary<int, string> originalNames = [];
 
-    private Dictionary<int, int> scp096TargetsAggroCount = new();
+    private readonly Dictionary<int, int> scp096TargetsAggroCount = [];
 
-    private Dictionary<int, bool> scp096TargetsFinalAggroStatus = new();
+    private readonly Dictionary<int, bool> scp096TargetsFinalAggroStatus = [];
 
-    private static HashSet<RoleTypeId> mainScps = new() {
+    private static readonly HashSet<RoleTypeId> mainScps = [
             RoleTypeId.Scp049,
             RoleTypeId.Scp079,
             RoleTypeId.Scp096,
@@ -41,13 +42,13 @@ public class EventHandlers
             RoleTypeId.Scp173,
             RoleTypeId.Scp939,
             RoleTypeId.Scp3114
-    };
+    ];
 
-    private Dictionary<int, DateTime> scpIsEscaped = new();
+    private readonly Dictionary<int, DateTime> scpIsEscaped = [];
 
     public void OnTransmitting(TransmittingEventArgs ev)
     {
-        if (config.IsUnknownTransmittingEnabled)
+        if (Config.IsUnknownTransmittingEnabled)
         {
             if (ev.Player.IsTransmitting)
             {
@@ -56,7 +57,7 @@ public class EventHandlers
                     originalNames[ev.Player.Id] = ev.Player.CustomName;
                 }
 
-                ev.Player.CustomName = config.RadioCustomName;
+                ev.Player.CustomName = Config.RadioCustomName;
             }
             else
             {
@@ -114,7 +115,7 @@ public class EventHandlers
         else
         {
             scp096TargetsAggroCount[ev.Target.Id]++;
-            if (scp096TargetsAggroCount[ev.Target.Id] > config.EscapingByElevatorMaxTimes)
+            if (scp096TargetsAggroCount[ev.Target.Id] > Config.EscapingByElevatorMaxTimes)
             {
                 scp096TargetsFinalAggroStatus[ev.Target.Id] = true;
             }
@@ -127,7 +128,7 @@ public class EventHandlers
             isNotPosibleToInteracteElevator)
         {
             ev.IsAllowed = false;
-            ev.Player.ShowHint(translation.Scp096ElevatorHint);
+            ev.Player.ShowHint(Translation.Scp096ElevatorHint);
         }
     }
 
@@ -145,17 +146,16 @@ public class EventHandlers
         scp096TargetsFinalAggroStatus.Remove(ev.Player.Id);
         scp096TargetsAggroCount.Remove(ev.Player.Id);
 
-        if (config.IsInfinityWavesTokensEnabled)
+        if (Config.IsInfinityWavesTokensEnabled)
         {
-            int ntfTokens, ciTokens;
-            bool ntf_result = Respawn.TryGetTokens(SpawnableFaction.NtfWave, out ntfTokens), ci_result = Respawn.TryGetTokens(SpawnableFaction.ChaosWave, out ciTokens);
+            bool ntf_result = Respawn.TryGetTokens(SpawnableFaction.NtfWave, out int ntfTokens), ci_result = Respawn.TryGetTokens(SpawnableFaction.ChaosWave, out int ciTokens);
 
             if (ntf_result && ntfTokens == 0) Respawn.ModifyTokens(PlayerRoles.Faction.FoundationStaff, 1);
 
             if (ci_result && ciTokens == 0) Respawn.ModifyTokens(PlayerRoles.Faction.FoundationEnemy, 1);
         }
 
-        if (config.IsScpEscapeCassiesEnabled && scpIsEscaped.ContainsKey(ev.Player.Id))
+        if (Config.IsScpEscapeCassiesEnabled && scpIsEscaped.ContainsKey(ev.Player.Id))
         {
             if (ev.NewRole == RoleTypeId.Spectator && mainScps.Contains(ev.Player.Role) && (DateTime.UtcNow - scpIsEscaped[ev.Player.Id]).TotalSeconds < 20)
             {
@@ -165,7 +165,7 @@ public class EventHandlers
                     if (char.IsDigit(escapingScpName[i]))
                         scpCassieName += escapingScpName[i] + " ";
 
-                Cassie.Message(string.Format(config.ScpEscapeCassieContent, scpCassieName));
+                Cassie.Message(string.Format(Config.ScpEscapeCassieContent, scpCassieName));
             }
             else
             {
@@ -173,7 +173,7 @@ public class EventHandlers
             }
         }
 
-        if (config.IsScp079Downloadable)
+        if (Config.Scp079Escape.IsDownloadable)
         {
             if (Plugin.active079Downloads.TryGetValue(ev.Player.Id, out var handle))
             {
@@ -189,7 +189,7 @@ public class EventHandlers
     {
         DataStructuresClear();
 
-        if (config.IsScp079Downloadable)
+        if (Config.Scp079Escape.IsDownloadable)
         {
             var rooms = Door.Get(DoorType.Scp079First).Rooms
                 .Concat(Door.Get(DoorType.Scp079Second).Rooms)
@@ -202,32 +202,32 @@ public class EventHandlers
 
     public void OnEscaping(EscapingEventArgs ev)
     {
-        if (config.IsChaosEscapeAllowed)
+        if (Config.IsChaosEscapeAllowed)
         {
-            if (ev.Player.Role.Side == Side.ChaosInsurgency && (ev.Player.CountItem(ItemCategory.SCPItem) + ev.Player.CountItem(ItemCategory.SpecialWeapon) >= config.ScpsAndSpecialWeaponsCountToChaosEscape))
+            if (ev.Player.Role.Side == Side.ChaosInsurgency && (ev.Player.CountItem(ItemCategory.SCPItem) + ev.Player.CountItem(ItemCategory.SpecialWeapon) >= Config.ScpsAndSpecialWeaponsCountToChaosEscape))
             {
                 ev.Player.ClearInventory();
                 ev.Player.Role.Set(RoleTypeId.Spectator);
             }
         }
 
-        if (config.KeepEffectsAfterEscaping)
+        if (Config.KeepEffectsAfterEscaping)
         {
             if (ev.Player.Role.Side != Side.Scp && ev.IsAllowed && ev.NewRole != RoleTypeId.Spectator)
             {
-                Plugin.escapingPlayerEffects[ev.Player.Id] = ev.Player.ActiveEffects.Select(e => (e.GetEffectType(), e.Intensity, e.TimeLeft)).ToList();
+                Plugin.escapingPlayerEffects[ev.Player.Id] = [.. ev.Player.ActiveEffects.Select(e => (e.GetEffectType(), e.Intensity, e.TimeLeft))];
 
                 Plugin.escapeTimes[ev.Player.Id] = DateTime.UtcNow;
             }
         }
 
-        if (config.IsScpEscapeCassiesEnabled)
+        if (Config.IsScpEscapeCassiesEnabled)
         {
             if (mainScps.Contains(ev.Player.Role))
                 scpIsEscaped[ev.Player.Id] = DateTime.UtcNow;
         }
 
-        if (config.IsScp079Downloadable && !ev.Player.IsCuffed)
+        if (Config.Scp079Escape.IsDownloadable && !ev.Player.IsCuffed)
         {
             if (Plugin.has079FlashDrive.Contains(ev.Player.Id))
             {
@@ -239,31 +239,10 @@ public class EventHandlers
                         player.Role.Set(RoleTypeId.Spectator);
                 }
 
-                if (config.IsScpEscapeCassiesEnabled)
-                    Cassie.Message(string.Format(config.ScpEscapeCassieContent, "SCP 0 7 9"));
+                if (Config.IsScpEscapeCassiesEnabled)
+                    Cassie.Message(string.Format(Config.ScpEscapeCassieContent, "SCP 0 7 9"));
             }
         }
-    }
-
-    public IEnumerator<float> Download079Coroutine(Player player)
-    {
-        float timer = 0f;
-        while (timer < config.Scp079DownloadDuration)
-        {
-            if (!Plugin.scp079Rooms.Contains(player.CurrentRoom))
-            {
-                player.ShowHint(translation.Scp079DownloadStoppingHint);
-                Plugin.active079Downloads.Remove(player.Id);
-                yield break;
-            }
-
-            yield return Timing.WaitForSeconds(1f);
-            timer += 1f;
-        }
-
-        Plugin.has079FlashDrive.Add(player.Id);
-        Plugin.active079Downloads.Remove(player.Id);
-        player.ShowHint(translation.Scp079DownloadCompletedHint);
     }
 
     private bool IsNonSentientScp(Player player)

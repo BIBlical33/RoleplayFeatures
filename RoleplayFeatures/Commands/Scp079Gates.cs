@@ -17,17 +17,17 @@ using Exiled.API.Features.Doors;
 [CommandHandler(typeof(ClientCommandHandler))]
 public class Scp079Gates : ICommand
 {
-    private Config config => Plugin.Instance.Config;
+    private Config Config => Plugin.Instance.Config;
 
     public string Command { get; } = "079gates";
 
-    public string[] Aliases { get; } = Array.Empty<string>();
+    public string[] Aliases { get; } = [];
 
     public string Description { get; } = "SCP-079 gates control";
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
-        if (!config.IsScp079Downloadable)
+        if (!Config.Scp079Escape.IsDownloadable)
         {
             response = "Command is unavailable";
             return false;

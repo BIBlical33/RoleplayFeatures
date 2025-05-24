@@ -27,20 +27,12 @@ namespace RoleplayFeatures
         [Description("How many SCPs and special weapons should a Chaos Insurgent have in his inventory to escape?")]
         public uint ScpsAndSpecialWeaponsCountToChaosEscape { get; set; } = 3;
 
+        public Scp079EscapeConfig Scp079Escape { get; set; } = new();
+
         public bool KeepEffectsAfterEscaping { get; set; } = true;
 
         [Description("Time to apply the effects (in seconds).")]
         public uint TimeToApplyEffects { get; set; } = 60;
-
-        [Description("Can SCP-079 escape with outside help?")]
-        public bool IsScp079Downloadable { get; set; } = true;
-
-        [Description("How long does it take to load SCP-079 in seconds?")]
-        public uint Scp079DownloadDuration { get; set; } = 100;
-
-        public bool IsScp079DownloadCassieEnabled { get; set; } = true;
-
-        public string Scp079CassieDownloadMessage { get; set; } = "Attention . Unauthorized access to SCP 0 7 9 containment chamber has been detected . Security check requires";
 
         [Description("Hide players nicknames when using the radio?")]
         public bool IsUnknownTransmittingEnabled { get; set; } = true;

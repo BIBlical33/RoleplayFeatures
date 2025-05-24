@@ -15,11 +15,11 @@ using Exiled.API.Enums;
 [CommandHandler(typeof(ClientCommandHandler))]
 public class EffectsGive : ICommand
 {
-    private Config config => Plugin.Instance.Config;
+    private Config Config => Plugin.Instance.Config;
 
     public string Command { get; } = "effectsgive";
 
-    public string[] Aliases { get; } = Array.Empty<string>();
+    public string[] Aliases { get; } = [];
 
     public string Description { get; } = "Returns effects after escaping";
 
@@ -27,7 +27,7 @@ public class EffectsGive : ICommand
     {
         Player player = Player.Get((CommandSender)sender);
 
-        if (!config.KeepEffectsAfterEscaping)
+        if (!Config.KeepEffectsAfterEscaping)
         {
             response = "Command is unavailable";
             return false;
@@ -42,7 +42,7 @@ public class EffectsGive : ICommand
         Plugin.escapingPlayerEffects.TryGetValue(player.Id, out var effects);
         Plugin.escapeTimes.TryGetValue(player.Id, out var escapeTime);
 
-        if (effects != null && (DateTime.UtcNow - escapeTime).TotalSeconds <= config.TimeToApplyEffects)
+        if (effects != null && (DateTime.UtcNow - escapeTime).TotalSeconds <= Config.TimeToApplyEffects)
         {
             foreach (var (type, intensity, remaining) in Plugin.escapingPlayerEffects[player.Id])
                 if (type != EffectType.Scp1344)

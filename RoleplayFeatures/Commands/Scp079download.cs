@@ -15,15 +15,16 @@ using PlayerRoles;
 using Exiled.API.Features.Doors;
 using System.Linq;
 using MEC;
+using System.Collections.Generic;
 
 [CommandHandler(typeof(ClientCommandHandler))]
 public class Scp079DownloadCommand : ICommand
 {
-    private Config config => Plugin.Instance.Config;
+    private Config Config => Plugin.Instance.Config;
 
     public string Command { get; } = "079download";
 
-    public string[] Aliases { get; } = Array.Empty<string>();
+    public string[] Aliases { get; } = [];
 
     public string Description { get; } = "Allows to download SCP-079 for its escape";
 
@@ -31,7 +32,7 @@ public class Scp079DownloadCommand : ICommand
     {
         Player player = Player.Get((CommandSender)sender);
 
-        if (!config.IsScp079Downloadable)
+        if (!Config.Scp079Escape.IsDownloadable)
         {
             response = "Command is unavailable";
             return false;
@@ -83,8 +84,8 @@ public class Scp079DownloadCommand : ICommand
         foreach (var room in Plugin.scp079Rooms)
             room.Color = new UnityEngine.Color(1, 0, 0);
 
-        if (config.IsScp079DownloadCassieEnabled)
-            Cassie.Message(config.Scp079CassieDownloadMessage);
+        if (Config.Scp079Escape.IsDownloadCassieEnabled)
+            Cassie.Message(Config.Scp079Escape.CassieDownloadMessage);
 
         if (Plugin.active079Downloads.ContainsKey(player.Id))
         {
@@ -92,9 +93,30 @@ public class Scp079DownloadCommand : ICommand
             Plugin.active079Downloads.Remove(player.Id);
         }
 
-        CoroutineHandle handle = Timing.RunCoroutine(Plugin.Instance.handlers.Download079Coroutine(player));
+        CoroutineHandle handle = Timing.RunCoroutine(Download079Coroutine(player));
         Plugin.active079Downloads[player.Id] = handle;
 
         return true;
+    }
+
+    private IEnumerator<float> Download079Coroutine(Player player)
+    {
+        float timer = 0f;
+        while (timer < Config.Scp079Escape.DownloadDuration)
+        {
+            if (!Plugin.scp079Rooms.Contains(player.CurrentRoom))
+            {
+                player.ShowHint(Plugin.Instance.Translation.Scp079DownloadStoppingHint);
+                Plugin.active079Downloads.Remove(player.Id);
+                yield break;
+            }
+
+            yield return Timing.WaitForSeconds(1f);
+            timer += 1f;
+        }
+
+        Plugin.has079FlashDrive.Add(player.Id);
+        Plugin.active079Downloads.Remove(player.Id);
+        player.ShowHint(Plugin.Instance.Translation.Scp079DownloadCompletedHint);
     }
 }

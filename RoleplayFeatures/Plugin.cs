@@ -24,21 +24,21 @@ namespace RoleplayFeatures
 
         public override Version RequiredExiledVersion { get; } = new Version(9, 0, 0);
 
-        public override Version Version { get; } = new Version(1, 3, 2);
+        public override Version Version { get; } = new Version(1, 3, 3);
 
-        public static Plugin Instance;
+        public static Plugin Instance { get; private set; } = null!;
 
-        public EventHandlers handlers;
+        private EventHandlers? handlers;
 
-        public static Dictionary<int, List<(EffectType Type, byte Intensity, float RemainingTime)>> escapingPlayerEffects = new();
+        internal static Dictionary<int, List<(EffectType Type, byte Intensity, float RemainingTime)>> escapingPlayerEffects = [];
 
-        public static Dictionary<int, DateTime> escapeTimes = new();
+        internal static Dictionary<int, DateTime> escapeTimes = [];
 
-        public static HashSet<Room> scp079Rooms = new();
+        internal static HashSet<Room> scp079Rooms = [];
 
-        public static Dictionary<int, CoroutineHandle> active079Downloads = new();
+        internal static Dictionary<int, CoroutineHandle> active079Downloads = [];
 
-        public static HashSet<int> has079FlashDrive = new();
+        internal static HashSet<int> has079FlashDrive = [];
 
         public override void OnEnabled()
         {
@@ -68,6 +68,9 @@ namespace RoleplayFeatures
 
         public override void OnDisabled()
         {
+            if (handlers is null)
+                return;
+
             Exiled.Events.Handlers.Player.Transmitting -= handlers.OnTransmitting;
             Exiled.Events.Handlers.Player.ChangingRole -= handlers.OnChangingRole;
             Exiled.Events.Handlers.Player.InteractingElevator -= handlers.OnInteractingElevator;
@@ -87,6 +90,7 @@ namespace RoleplayFeatures
             Exiled.Events.Handlers.Scp096.CalmingDown -= handlers.OnCalmingDown;
 
             handlers = null;
+            Instance = null!;
 
             base.OnDisabled();
         }
