@@ -14,7 +14,7 @@ Exiled API plugin designed to improve immersion on SCP SL RP servers.
 - Hide the player's nickname when speaking on the radio.
 - Allows a Chaos Insurgent to escape if they have taken SCP items and special weapons.
 - Prohibit all SCPs from detonating the warhead.
-- Prohibit all SCPs, except SCP-049, from interacting with the warhead panel or disabling generators.
+- Prohibit all SCPs, except SCP-049 and SCP-3114, from interacting with the warhead panel or disabling generators.
 - Sending a Cassie when a playable SCP escapes.
 
 ## Installation
