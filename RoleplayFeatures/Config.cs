@@ -16,8 +16,6 @@ namespace RoleplayFeatures
 
         public bool Debug { get; set; } = false;
 
-        public bool IsInfinityWavesTokensEnabled { get; set; } = false;
-
         public bool IsScpEscapeCassiesEnabled { get; set; } = true;
 
         public string ScpEscapeCassieContent { get; set; } = "{0} has escaped from the facility";
@@ -29,12 +27,6 @@ namespace RoleplayFeatures
 
         public Scp079EscapeConfig Scp079Escape { get; set; } = new();
 
-        public bool KeepEffectsAfterEscaping { get; set; } = true;
-
-        [Description("Time to apply the effects (in seconds).")]
-        public uint TimeToApplyEffects { get; set; } = 60;
-
-        [Description("Hide players nicknames when using the radio?")]
         public bool IsUnknownTransmittingEnabled { get; set; } = true;
 
         [Description("A text replacing player's nickname on the radio")]

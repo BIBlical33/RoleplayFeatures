@@ -7,7 +7,6 @@
 
 using Exiled.API.Enums;
 using Exiled.API.Features;
-using Exiled.API.Extensions;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Scp096;
 using Exiled.Events.EventArgs.Scp914;
@@ -18,7 +17,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Exiled.API.Features.Doors;
 using MEC;
-using System.Collections.ObjectModel;
 
 namespace RoleplayFeatures.Events;
 
@@ -146,15 +144,6 @@ public class EventHandlers
         scp096TargetsFinalAggroStatus.Remove(ev.Player.Id);
         scp096TargetsAggroCount.Remove(ev.Player.Id);
 
-        if (Config.IsInfinityWavesTokensEnabled)
-        {
-            bool ntf_result = Respawn.TryGetTokens(SpawnableFaction.NtfWave, out int ntfTokens), ci_result = Respawn.TryGetTokens(SpawnableFaction.ChaosWave, out int ciTokens);
-
-            if (ntf_result && ntfTokens == 0) Respawn.ModifyTokens(PlayerRoles.Faction.FoundationStaff, 1);
-
-            if (ci_result && ciTokens == 0) Respawn.ModifyTokens(PlayerRoles.Faction.FoundationEnemy, 1);
-        }
-
         if (Config.IsScpEscapeCassiesEnabled && scpIsEscaped.ContainsKey(ev.Player.Id))
         {
             if (ev.NewRole == RoleTypeId.Spectator && mainScps.Contains(ev.Player.Role) && (DateTime.UtcNow - scpIsEscaped[ev.Player.Id]).TotalSeconds < 20)
@@ -211,16 +200,6 @@ public class EventHandlers
             }
         }
 
-        if (Config.KeepEffectsAfterEscaping)
-        {
-            if (ev.Player.Role.Side != Side.Scp && ev.IsAllowed && ev.NewRole != RoleTypeId.Spectator)
-            {
-                Plugin.escapingPlayerEffects[ev.Player.Id] = [.. ev.Player.ActiveEffects.Select(e => (e.GetEffectType(), e.Intensity, e.TimeLeft))];
-
-                Plugin.escapeTimes[ev.Player.Id] = DateTime.UtcNow;
-            }
-        }
-
         if (Config.IsScpEscapeCassiesEnabled)
         {
             if (mainScps.Contains(ev.Player.Role))
@@ -247,7 +226,7 @@ public class EventHandlers
 
     private bool IsNonSentientScp(Player player)
     {
-        return player.Role.Side == Side.Scp && player.Role != RoleTypeId.Scp049;
+        return player.Role.Side == Side.Scp && player.Role != RoleTypeId.Scp049 && player.Role != RoleTypeId.Scp3114;
     }
 
     private void DataStructuresClear()
@@ -256,8 +235,6 @@ public class EventHandlers
         scp096TargetsAggroCount.Clear();
         scp096TargetsFinalAggroStatus.Clear();
         scpIsEscaped.Clear();
-        Plugin.escapeTimes.Clear();
-        Plugin.escapingPlayerEffects.Clear();
         Plugin.scp079Rooms.Clear();
         Plugin.active079Downloads.Clear();
         Plugin.has079FlashDrive.Clear();

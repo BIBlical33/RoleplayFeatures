@@ -16,9 +16,6 @@ Exiled API plugin designed to improve immersion on SCP SL RP servers.
 - Prohibit all SCPs from detonating the warhead.
 - Prohibit all SCPs, except SCP-049, from interacting with the warhead panel or disabling generators.
 - Sending a Cassie when a playable SCP escapes.
-- Infinite tokens for MTF/CI spawning.
-- Returning effects after escaping with a command `.effectsgive`.
-
 
 ## Installation
 1. Install [Exiled](https://github.com/ExSLMod-Team/EXILED).
