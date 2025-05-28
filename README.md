@@ -3,7 +3,6 @@
 [![Version](https://img.shields.io/github/v/release/BIBlical33/RoleplayFeatures?sort=semver&style=flat-square&color=8DBBE9&label=Version)]()
 [![License](https://img.shields.io/badge/License-CC%20BY%E2%80%93SA%203.0-df967f?style=flat-square)]()
 [![Downloads](https://img.shields.io/github/downloads/BIBlical33/RoleplayFeatures/total?style=flat-square&label=Downloads&color=orange)]()
-[![Discord](https://img.shields.io/badge/Discord-Support-7289DA?style=flat-square&logo=discord)](https://discord.gg/bHXRudyhtu)
 
 ## Overview
 Exiled API plugin designed to improve immersion on SCP SL RP servers.
@@ -48,6 +47,3 @@ radio_custom_name: '???'
 # How many times is it possible to escape by elevator from SCP-096?
 escaping_by_elevator_max_times: 2
 ```
-
-## Support
-If you encounter any issues with the plugin, you can contact me on my [Discord](https://discord.gg/bHXRudyhtu).
