@@ -5,7 +5,7 @@
 [![Downloads](https://img.shields.io/github/downloads/BIBlical33/RoleplayFeatures/total?style=flat-square&label=Downloads&color=orange)]()
 
 ## Overview
-Exiled API plugin designed to improve immersion on SCP SL RP servers.
+Exiled API plugin designed to improve immersion on SCP: Secret Laboratory roleplay servers.
 
 ## Features
 - Prohibition against leaving by lift from SCP-096.
