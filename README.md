@@ -17,7 +17,7 @@ Exiled API plugin designed to improve immersion on SCP SL RP servers.
 - Sending a Cassie when a playable SCP escapes.
 
 ## Installation
-1. Install [Exiled ](https://github.com/ExSLMod-Team/EXILED Install [Exiled framework](https://github.com/ExMod-Team/EXILED) v9.6.0+.
+1. Install [Exiled framework](https://github.com/ExMod-Team/EXILED) v9.6.0+.
 2. Chose git release, download `RoleplayFeatures.dll` and drop into server `.config/Exiled/Plugins` path.
  
 ## Default config
