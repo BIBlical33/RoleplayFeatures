@@ -12,87 +12,86 @@ using System.Collections.Generic;
 using MEC;
 using RoleplayFeatures.Events;
 
-namespace RoleplayFeatures
+namespace RoleplayFeatures;
+
+public class Plugin : Plugin<Config, Translation>
 {
-    public class Plugin : Plugin<Config, Translation>
+    public override string Author => "BIBlical";
+
+    public override string Name => "RoleplayFeatures";
+
+    public override string Prefix => Name;
+
+    public override Version RequiredExiledVersion { get; } = new Version(9, 0, 0);
+
+    public override Version Version { get; } = new Version(1, 3, 3);
+
+    public static Plugin Instance { get; private set; } = null!;
+
+    private EventHandlers? handlers;
+
+    internal static Dictionary<int, List<(EffectType Type, byte Intensity, float RemainingTime)>> escapingPlayerEffects = [];
+
+    internal static Dictionary<int, DateTime> escapeTimes = [];
+
+    internal static HashSet<Room> scp079Rooms = [];
+
+    internal static Dictionary<int, CoroutineHandle> active079Downloads = [];
+
+    internal static HashSet<int> has079FlashDrive = [];
+
+    public override void OnEnabled()
     {
-        public override string Author => "BIBlical";
+        Instance = this;
+        handlers = new EventHandlers();
 
-        public override string Name => "RoleplayFeatures";
+        Exiled.Events.Handlers.Player.Transmitting += handlers.OnTransmitting;
+        Exiled.Events.Handlers.Player.ChangingRole += handlers.OnChangingRole;
+        Exiled.Events.Handlers.Player.StoppingGenerator += handlers.OnDeactivatingGenerator;
+        Exiled.Events.Handlers.Player.InteractingElevator += handlers.OnInteractingElevator;
+        Exiled.Events.Handlers.Player.Escaping += handlers.OnEscaping;
 
-        public override string Prefix => Name;
+        Exiled.Events.Handlers.Server.RoundStarted += handlers.OnRoundStarted;
 
-        public override Version RequiredExiledVersion { get; } = new Version(9, 0, 0);
+        Exiled.Events.Handlers.Warhead.ChangingLeverStatus += handlers.OnChangingLeverStatus;
+        Exiled.Events.Handlers.Warhead.Starting += handlers.OnStartingDetonation;
+        Exiled.Events.Handlers.Warhead.Stopping += handlers.OnStoppingDetonation;
 
-        public override Version Version { get; } = new Version(1, 3, 3);
+        Exiled.Events.Handlers.Scp914.Activating += handlers.OnScp914Activating;
+        Exiled.Events.Handlers.Scp914.ChangingKnobSetting += handlers.OnChangingKnobSetting;
 
-        public static Plugin Instance { get; private set; } = null!;
+        Exiled.Events.Handlers.Scp096.AddingTarget += handlers.OnAddingTarget;
+        Exiled.Events.Handlers.Scp096.CalmingDown += handlers.OnCalmingDown;
 
-        private EventHandlers? handlers;
+        base.OnEnabled();
+    }
 
-        internal static Dictionary<int, List<(EffectType Type, byte Intensity, float RemainingTime)>> escapingPlayerEffects = [];
+    public override void OnDisabled()
+    {
+        if (handlers is null)
+            return;
 
-        internal static Dictionary<int, DateTime> escapeTimes = [];
+        Exiled.Events.Handlers.Player.Transmitting -= handlers.OnTransmitting;
+        Exiled.Events.Handlers.Player.ChangingRole -= handlers.OnChangingRole;
+        Exiled.Events.Handlers.Player.InteractingElevator -= handlers.OnInteractingElevator;
+        Exiled.Events.Handlers.Player.StoppingGenerator -= handlers.OnDeactivatingGenerator;
+        Exiled.Events.Handlers.Player.Escaping -= handlers.OnEscaping;
 
-        internal static HashSet<Room> scp079Rooms = [];
+        Exiled.Events.Handlers.Server.RoundStarted -= handlers.OnRoundStarted;
 
-        internal static Dictionary<int, CoroutineHandle> active079Downloads = [];
+        Exiled.Events.Handlers.Warhead.ChangingLeverStatus -= handlers.OnChangingLeverStatus;
+        Exiled.Events.Handlers.Warhead.Starting -= handlers.OnStartingDetonation;
+        Exiled.Events.Handlers.Warhead.Stopping -= handlers.OnStoppingDetonation;
 
-        internal static HashSet<int> has079FlashDrive = [];
+        Exiled.Events.Handlers.Scp914.Activating -= handlers.OnScp914Activating;
+        Exiled.Events.Handlers.Scp914.ChangingKnobSetting -= handlers.OnChangingKnobSetting;
 
-        public override void OnEnabled()
-        {
-            Instance = this;
-            handlers = new EventHandlers();
+        Exiled.Events.Handlers.Scp096.AddingTarget -= handlers.OnAddingTarget;
+        Exiled.Events.Handlers.Scp096.CalmingDown -= handlers.OnCalmingDown;
 
-            Exiled.Events.Handlers.Player.Transmitting += handlers.OnTransmitting;
-            Exiled.Events.Handlers.Player.ChangingRole += handlers.OnChangingRole;
-            Exiled.Events.Handlers.Player.StoppingGenerator += handlers.OnDeactivatingGenerator;
-            Exiled.Events.Handlers.Player.InteractingElevator += handlers.OnInteractingElevator;
-            Exiled.Events.Handlers.Player.Escaping += handlers.OnEscaping;
+        handlers = null;
+        Instance = null!;
 
-            Exiled.Events.Handlers.Server.RoundStarted += handlers.OnRoundStarted;
-
-            Exiled.Events.Handlers.Warhead.ChangingLeverStatus += handlers.OnChangingLeverStatus;
-            Exiled.Events.Handlers.Warhead.Starting += handlers.OnStartingDetonation;
-            Exiled.Events.Handlers.Warhead.Stopping += handlers.OnStoppingDetonation;
-
-            Exiled.Events.Handlers.Scp914.Activating += handlers.OnScp914Activating;
-            Exiled.Events.Handlers.Scp914.ChangingKnobSetting += handlers.OnChangingKnobSetting;
-
-            Exiled.Events.Handlers.Scp096.AddingTarget += handlers.OnAddingTarget;
-            Exiled.Events.Handlers.Scp096.CalmingDown += handlers.OnCalmingDown;
-
-            base.OnEnabled();
-        }
-
-        public override void OnDisabled()
-        {
-            if (handlers is null)
-                return;
-
-            Exiled.Events.Handlers.Player.Transmitting -= handlers.OnTransmitting;
-            Exiled.Events.Handlers.Player.ChangingRole -= handlers.OnChangingRole;
-            Exiled.Events.Handlers.Player.InteractingElevator -= handlers.OnInteractingElevator;
-            Exiled.Events.Handlers.Player.StoppingGenerator -= handlers.OnDeactivatingGenerator;
-            Exiled.Events.Handlers.Player.Escaping -= handlers.OnEscaping;
-
-            Exiled.Events.Handlers.Server.RoundStarted -= handlers.OnRoundStarted;
-
-            Exiled.Events.Handlers.Warhead.ChangingLeverStatus -= handlers.OnChangingLeverStatus;
-            Exiled.Events.Handlers.Warhead.Starting -= handlers.OnStartingDetonation;
-            Exiled.Events.Handlers.Warhead.Stopping -= handlers.OnStoppingDetonation;
-
-            Exiled.Events.Handlers.Scp914.Activating -= handlers.OnScp914Activating;
-            Exiled.Events.Handlers.Scp914.ChangingKnobSetting -= handlers.OnChangingKnobSetting;
-
-            Exiled.Events.Handlers.Scp096.AddingTarget -= handlers.OnAddingTarget;
-            Exiled.Events.Handlers.Scp096.CalmingDown -= handlers.OnCalmingDown;
-
-            handlers = null;
-            Instance = null!;
-
-            base.OnDisabled();
-        }
+        base.OnDisabled();
     }
 }

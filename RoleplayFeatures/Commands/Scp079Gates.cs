@@ -8,11 +8,12 @@
 using CommandSystem;
 using System;
 using Exiled.API.Features;
-namespace RoleplayFeatures.Commands;
-
 using Exiled.API.Enums;
 using PlayerRoles;
 using Exiled.API.Features.Doors;
+using System.Linq;
+
+namespace RoleplayFeatures.Commands;
 
 [CommandHandler(typeof(ClientCommandHandler))]
 public class Scp079Gates : ICommand
@@ -21,13 +22,13 @@ public class Scp079Gates : ICommand
 
     public string Command { get; } = "079gates";
 
-    public string[] Aliases { get; } = [];
+    public string[] Aliases { get; } = ["79gates", "scp079gates", "scp79gates"];
 
     public string Description { get; } = "SCP-079 gates control";
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
-        if (!Config.Scp079Escape.IsDownloadable)
+        if (!Config.Scp079Escape.IsDownloadable || Generator.List?.Count(generator => generator?.IsEngaged == true) == 3)
         {
             response = "Command is unavailable";
             return false;
@@ -41,7 +42,7 @@ public class Scp079Gates : ICommand
 
         if (arguments.Count != 1)
         {
-            response = "\nPlease enter a valid subcommand:\nopen\nclose";
+            response = "Please enter a valid subcommand:\nopen\nclose";
             return false;
         }
 
@@ -71,7 +72,7 @@ public class Scp079Gates : ICommand
             return true;
         }
 
-        response = "\nPlease enter a valid subcommand:\nopen\nclose";
+        response = "Please enter a valid subcommand:\nopen\nclose";
         return false;
     }
 }

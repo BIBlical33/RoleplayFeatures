@@ -5,8 +5,6 @@
 // License: Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
 // See: https://creativecommons.org/licenses/by-sa/3.0/
 
-namespace RoleplayFeatures.Commands;
-
 using CommandSystem;
 using System;
 using Exiled.API.Features;
@@ -17,6 +15,8 @@ using System.Linq;
 using MEC;
 using System.Collections.Generic;
 
+namespace RoleplayFeatures.Commands;
+
 [CommandHandler(typeof(ClientCommandHandler))]
 public class Scp079DownloadCommand : ICommand
 {
@@ -24,7 +24,7 @@ public class Scp079DownloadCommand : ICommand
 
     public string Command { get; } = "079download";
 
-    public string[] Aliases { get; } = [];
+    public string[] Aliases { get; } = ["79download", "scp079download", "download079"];
 
     public string Description { get; } = "Allows to download SCP-079 for its escape";
 
