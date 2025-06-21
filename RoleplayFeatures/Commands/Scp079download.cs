@@ -44,17 +44,7 @@ public class Scp079DownloadCommand : ICommand
             return false;
         }
 
-        bool isScp079exists = false;
-
-        foreach (Player p in Player.List)
-        {
-            if (p.Role == RoleTypeId.Scp079)
-            {
-                isScp079exists = true;
-                break;
-            }
-        }
-
+        bool isScp079exists = Player.Get(RoleTypeId.Scp079).Any();
         if (!isScp079exists)
         {
             response = "There is no SCP-079 player on the server";

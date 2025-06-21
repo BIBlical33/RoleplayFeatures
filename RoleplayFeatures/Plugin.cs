@@ -5,7 +5,6 @@
 // License: Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
 // See: https://creativecommons.org/licenses/by-sa/3.0/
 
-using Exiled.API.Enums;
 using Exiled.API.Features;
 using System;
 using System.Collections.Generic;
@@ -24,15 +23,11 @@ public class Plugin : Plugin<Config, Translation>
 
     public override Version RequiredExiledVersion { get; } = new Version(9, 0, 0);
 
-    public override Version Version { get; } = new Version(1, 3, 3);
+    public override Version Version { get; } = new Version(2, 0, 2);
 
     public static Plugin Instance { get; private set; } = null!;
 
     private EventHandlers? handlers;
-
-    internal static Dictionary<int, List<(EffectType Type, byte Intensity, float RemainingTime)>> escapingPlayerEffects = [];
-
-    internal static Dictionary<int, DateTime> escapeTimes = [];
 
     internal static HashSet<Room> scp079Rooms = [];
 
