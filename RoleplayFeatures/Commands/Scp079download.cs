@@ -77,12 +77,6 @@ public class Scp079DownloadCommand : ICommand
         if (Config.Scp079Escape.IsDownloadCassieEnabled)
             Cassie.Message(Config.Scp079Escape.CassieDownloadMessage);
 
-        if (Plugin.active079Downloads.ContainsKey(player.Id))
-        {
-            Timing.KillCoroutines(Plugin.active079Downloads[player.Id]);
-            Plugin.active079Downloads.Remove(player.Id);
-        }
-
         CoroutineHandle handle = Timing.RunCoroutine(Download079Coroutine(player));
         Plugin.active079Downloads[player.Id] = handle;
 
