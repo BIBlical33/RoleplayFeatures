@@ -46,7 +46,7 @@ public class EventHandlers
 
     public void OnTransmitting(TransmittingEventArgs ev)
     {
-        if (Config.IsUnknownTransmittingEnabled)
+        if (Config.IsUnknownTransmittingEnabled && ev.Player.UniqueRole != "SCP-035")
         {
             if (ev.Player.IsTransmitting)
             {
