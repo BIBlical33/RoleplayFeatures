@@ -88,6 +88,9 @@ public class Scp079DownloadCommand : ICommand
         float timer = 0f;
         while (timer < Config.Scp079Escape.DownloadDuration)
         {
+            if (player == null)
+                yield break;
+
             if (!Plugin.scp079Rooms.Contains(player.CurrentRoom))
             {
                 player.ShowHint(Plugin.Instance.Translation.Scp079DownloadStoppingHint);

@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-    <Version>2.0.2</Version>
-    <AssemblyVersion>2.0.2.0</AssemblyVersion>
-    <FileVersion>2.0.2.0</FileVersion>
-    <InformationalVersion>2.0.2</InformationalVersion>
+    <Version>2.0.3</Version>
+    <AssemblyVersion>2.0.3.0</AssemblyVersion>
+    <FileVersion>2.0.3.0</FileVersion>
+    <InformationalVersion>2.0.3</InformationalVersion>
     <ImplicitUsings>false</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<LangVersion>latest</LangVersion>
@@ -21,31 +21,31 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\.nuget\packages\exmod.exiled\9.6.0\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
+      <HintPath>..\..\..\..\..\.nuget\packages\exmod.exiled\9.6.3\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\..\..\..\Downloads\Refs\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="CommandSystem.Core">
-      <HintPath>..\..\..\..\..\.nuget\packages\exmod.exiled\9.6.0\lib\net48\CommandSystem.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\.nuget\packages\exmod.exiled\9.6.3\lib\net48\CommandSystem.Core.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.API">
-      <HintPath>..\..\..\..\..\.nuget\packages\exmod.exiled\9.6.0\lib\net48\Exiled.API.dll</HintPath>
+      <HintPath>..\..\..\..\..\.nuget\packages\exmod.exiled\9.6.3\lib\net48\Exiled.API.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.Events">
-      <HintPath>..\..\..\..\..\.nuget\packages\exmod.exiled\9.6.0\lib\net48\Exiled.Events.dll</HintPath>
+      <HintPath>..\..\..\..\..\.nuget\packages\exmod.exiled\9.6.3\lib\net48\Exiled.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="LabApi">
+      <HintPath>..\..\..\..\..\.nuget\packages\exmod.exiled\9.6.3\lib\net48\LabApi.dll</HintPath>
     </Reference>
     <Reference Include="Mirror">
-      <HintPath>..\..\..\..\..\Downloads\Mirror.dll</HintPath>
-    </Reference>
-    <Reference Include="PluginAPI">
-      <HintPath>..\..\..\..\..\.nuget\packages\exmod.exiled\9.6.0\lib\net48\LabApi.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\Refs\Mirror.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\..\Downloads\Refs\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\..\..\..\Downloads\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\Refs\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 

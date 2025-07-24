@@ -82,7 +82,7 @@ public class EventHandlers
 
     public void OnStartingDetonation(StartingEventArgs ev)
     {
-        if (ev.Player.Role.Side == Side.Scp)
+        if (ev.Player.Role.Side == Side.Scp || ev.Player.UniqueRole == "SCP-035")
             ev.IsAllowed = false;
     }
 
@@ -106,6 +106,8 @@ public class EventHandlers
 
     public void OnAddingTarget(AddingTargetEventArgs ev)
     {
+        if (ev.Target.Role == RoleTypeId.Tutorial) return;
+
         if (!scp096TargetsAggroCount.ContainsKey(ev.Target.Id))
         {
             scp096TargetsAggroCount[ev.Target.Id] = 1;
