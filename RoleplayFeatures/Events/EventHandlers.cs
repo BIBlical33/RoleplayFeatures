@@ -46,7 +46,7 @@ public class EventHandlers
 
     public void OnTransmitting(TransmittingEventArgs ev)
     {
-        if (Config.IsUnknownTransmittingEnabled && ev.Player.UniqueRole != "SCP-035")
+        if (Config.IsUnknownTransmittingEnabled && !Config.CustomScps.Contains(ev.Player.UniqueRole))
         {
             if (ev.Player.IsTransmitting)
             {
@@ -82,7 +82,7 @@ public class EventHandlers
 
     public void OnStartingDetonation(StartingEventArgs ev)
     {
-        if (ev.Player.Role.Side == Side.Scp || ev.Player.UniqueRole == "SCP-035")
+        if (ev.Player.Role.Side == Side.Scp || Config.CustomScps.Contains(ev.Player.UniqueRole))
             ev.IsAllowed = false;
     }
 
@@ -148,18 +148,21 @@ public class EventHandlers
 
         if (Config.IsScpEscapeCassiesEnabled && scpIsEscaped.ContainsKey(ev.Player.Id))
         {
-            if (ev.NewRole == RoleTypeId.Spectator && mainScps.Contains(ev.Player.Role) && (DateTime.UtcNow - scpIsEscaped[ev.Player.Id]).TotalSeconds < 20)
+            if (ev.NewRole == RoleTypeId.Spectator && (DateTime.UtcNow - scpIsEscaped[ev.Player.Id]).TotalSeconds < 20)
             {
                 string escapingScpName = ev.Player.Role.Name, scpCassieName = "SCP ";
+
+                if (Config.CustomScps.Contains(ev.Player.UniqueRole))
+                {
+                    escapingScpName = ev.Player.UniqueRole;
+                }
 
                 for (int i = 0; i < escapingScpName.Length; ++i)
                     if (char.IsDigit(escapingScpName[i]))
                         scpCassieName += escapingScpName[i] + " ";
 
                 Cassie.Message(string.Format(Config.ScpEscapeCassieContent, scpCassieName));
-            }
-            else
-            {
+
                 scpIsEscaped.Remove(ev.Player.Id);
             }
         }
@@ -204,7 +207,7 @@ public class EventHandlers
 
         if (Config.IsScpEscapeCassiesEnabled)
         {
-            if (mainScps.Contains(ev.Player.Role))
+            if (mainScps.Contains(ev.Player.Role) || Config.CustomScps.Contains(ev.Player.UniqueRole))
                 scpIsEscaped[ev.Player.Id] = DateTime.UtcNow;
         }
 

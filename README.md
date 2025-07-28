@@ -42,4 +42,6 @@ is_unknown_transmitting_enabled: true
 radio_custom_name: '???'
 # How many times is it possible to escape by elevator from SCP-096?
 escaping_by_elevator_max_times: 2
+# The names of the custom SCPs that you have (for plugin compatibility)
+custom_scps: []
 ```

@@ -6,6 +6,7 @@
 // See: https://creativecommons.org/licenses/by-sa/3.0/
 
 using Exiled.API.Interfaces;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace RoleplayFeatures;
@@ -34,4 +35,7 @@ public class Config : IConfig
 
     [Description("How many times is it possible to escape by elevator from SCP-096?")]
     public uint EscapingByElevatorMaxTimes { get; set; } = 2;
+
+    [Description("The names of the custom SCPs that you have (for plugin compatibility)")]
+    public HashSet<string> CustomScps { get; set; } = [];
 }
